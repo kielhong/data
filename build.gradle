@@ -16,6 +16,8 @@ apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
 
 jar {
 	baseName = 'data'
@@ -51,4 +53,11 @@ task wrapper(type: Wrapper) {
 checkstyle {
 	toolVersion = '6.17'
 	sourceSets = [sourceSets.main, sourceSets.test]
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
 }
