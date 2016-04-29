@@ -2,6 +2,7 @@ package net.kiel.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -21,12 +22,11 @@ public class IndexControllerTest {
     MockMvc mockMvc;
 
     @Test
-    public void indexShouldStatusOk() throws Exception {
+    public void indexReturnStatusOk() throws Exception {
         mockMvc.perform(get("/"))
-                .andDo(print())
                 .andExpect(status().isOk())
-                .andReturn()
-                    .getResponse().getContentAsString().contains("Hello, World");
-
+                .andExpect(handler().handlerType(IndexController.class))
+                .andExpect(handler().methodName("index"))
+                .andDo(print());
     }
 }
