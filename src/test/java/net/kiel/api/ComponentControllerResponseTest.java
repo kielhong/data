@@ -2,6 +2,7 @@ package net.kiel.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 import net.kiel.domain.Component;
 import net.kiel.service.ComponentService;
@@ -17,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,31 +28,26 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ComponentControllerResponseTest {
     @Autowired
-    private TestRestTemplate testRestTemplate;
+    TestRestTemplate testRestTemplate;
 
     @MockBean
-    private ComponentService componentService;
+    ComponentService componentService;
 
     @Test
     public void componentListTest() {
-        given(componentService.getComponents()).willReturn(getList());
+        // given
+        given(componentService.getComponents())
+                .willReturn(
+                        new ArrayList<Component>(Arrays.asList(
+                            new Component(0L, "회원", ZonedDateTime.now()),
+                            new Component(1L, "업소", ZonedDateTime.now()))));
 
+        // when
         ResponseEntity<String> responseEntity =
                 testRestTemplate.getForEntity("/components", String.class);
 
+        // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).contains("회원");
-    }
-
-    /**
-     * Mock Components List
-     * @return Mock List
-     */
-    public List<Component> getList() {
-        List<Component> list = new ArrayList<Component>();
-        list.add(new Component(0L, "회원", ZonedDateTime.now()));
-        list.add(new Component(1L, "업소", ZonedDateTime.now()));
-
-        return list;
     }
 }
