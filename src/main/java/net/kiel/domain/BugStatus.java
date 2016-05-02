@@ -1,6 +1,5 @@
 package net.kiel.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +13,6 @@ import javax.persistence.Id;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class BugStatus {
     public BugStatus(String status) {
         this.status = status;
