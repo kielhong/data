@@ -26,7 +26,7 @@ import java.util.Arrays;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ComponentControllerResponseTest {
     @Autowired
-    TestRestTemplate testRestTemplate;
+    TestRestTemplate template;
 
     @MockBean
     ComponentService componentService;
@@ -42,7 +42,7 @@ public class ComponentControllerResponseTest {
 
         // when
         ResponseEntity<String> responseEntity =
-                testRestTemplate.getForEntity("/components", String.class);
+                template.getForEntity("/components", String.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);

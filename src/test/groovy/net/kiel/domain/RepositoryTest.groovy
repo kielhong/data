@@ -8,10 +8,6 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.transaction.annotation.Transactional
 import spock.lang.Specification
 
-import java.time.ZoneId
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
-
 /**
  * Created by kiel on 2016. 4. 19..
  */

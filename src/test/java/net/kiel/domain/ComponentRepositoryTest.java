@@ -31,6 +31,7 @@ public class ComponentRepositoryTest {
 
     @Test
     public void multipleComponentShouldBeIncludedInBug() {
+        // given
         Account account = new Account("보고자");
         accountRepository.save(account);
         BugStatus status = new BugStatus("TODO");
@@ -40,6 +41,7 @@ public class ComponentRepositoryTest {
         Component component2 = new Component(1L, "업소", ZonedDateTime.now());
         componentRepository.save(component2);
 
+        // when
         Bug bug = new Bug();
         bug.setReporter(account);
         bug.setStatus(status);
@@ -47,10 +49,10 @@ public class ComponentRepositoryTest {
         components.add(component1);
         components.add(component2);
         bug.setComponents(components);
-
         bugRepository.save(bug);
-
         Bug savedBug = bugRepository.findOne(bug.getId());
+
+        // then
         assertThat(savedBug.getComponents().size()).isEqualTo(2);
     }
 }
